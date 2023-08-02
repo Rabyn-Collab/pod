@@ -32,6 +32,7 @@ class Home extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: HomePage(),
       theme: ThemeData(
+        fontFamily: 'Raleway',
         useMaterial3: true,
          // colorSchemeSeed: Colors.pink,
          appBarTheme: AppBarTheme(
