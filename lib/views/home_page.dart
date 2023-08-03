@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod/constants/colors.dart';
+import 'package:riverpod/models/book.dart';
 
 
 
@@ -30,40 +31,73 @@ class HomePage extends StatelessWidget {
         body: Column(
           children: [
            Container(
-           //  margin: EdgeInsets.only(top: 20, left: 10),
-           //  margin: EdgeInsets.all(10),
-           //  margin: EdgeInsets.symmetric(horizontal: 10),
              padding: EdgeInsets.all(20),
-             height: 200,
+             height: 250,
              width: double.infinity,
-             child: Text(
-                 'aslkjdaskldjlasksad\n'
-                 'aslkdjlksajlksadj', style:
-             TextStyle(
-               color: Colors.black,
-               fontSize: 30,
-
-               //letterSpacing: 5,
-               //wordSpacing:
-                  fontFamily: 'Raleway',
-               shadows: [
-                 Shadow(
-                   color: Colors.red,
-                   blurRadius: 20,
-                   offset: Offset(20, 4)
-                 ),
-                 Shadow(
-                     color: Colors.orange,
-                     blurRadius: 20,
-                     offset: Offset(20, 4)
-                 ),
-               ]
-               //backgroundColor: Colors.blue
-               // height: 2
-               //fontWeight: FontWeight.w900
-             ),),
+             child: Image.network('https://images.unsplash.com/photo-1691030133693-84d7bbec65a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=600&q=60', fit: BoxFit.fill,)
            ),
-            Text('sajdhkja'),
+
+            Container(
+              height: 200,
+              width: double.infinity,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: bookData.length,
+                  itemBuilder: (context, index){
+                  final book = bookData[index];
+                    return Container(
+                      width: 360,
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Card(
+                              child: Container(
+                                height: 150,
+                                width: 360,
+                                child: Row(
+                                  children: [
+                                   SizedBox(
+                                     width: 140,
+                                   ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 5),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(book.title, style: TextStyle(fontWeight: FontWeight.bold),),
+                                            Text(book.detail, maxLines: 4,style: TextStyle(fontSize: 13,color: Colors.grey.shade700, fontWeight: FontWeight.w500),),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(book.rating),
+                                                Text(book.genre, style: TextStyle(color: Colors.teal),),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                              left: 15,
+                              bottom: 10,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(book.imageUrl, height: 190, width: 125, fit: BoxFit.cover,))),
+                        ],
+                      ),
+                    );
+                  }
+              )
+            ),
+
           ],
         )
     );
