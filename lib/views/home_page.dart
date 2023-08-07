@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:riverpod/constants/colors.dart';
 import 'package:riverpod/models/book.dart';
+import 'package:riverpod/views/detail_page.dart';
+import 'package:riverpod/views/widgets/book_widget.dart';
 
 
 
@@ -45,58 +48,75 @@ class HomePage extends StatelessWidget {
                 itemCount: bookData.length,
                   itemBuilder: (context, index){
                   final book = bookData[index];
-                    return Container(
-                      width: 360,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Card(
-                              child: Container(
-                                height: 150,
-                                width: 360,
-                                child: Row(
-                                  children: [
-                                   SizedBox(
-                                     width: 140,
-                                   ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 5),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(book.title, style: TextStyle(fontWeight: FontWeight.bold),),
-                                            Text(book.detail, maxLines: 4,style: TextStyle(fontSize: 13,color: Colors.grey.shade700, fontWeight: FontWeight.w500),),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(book.rating),
-                                                Text(book.genre, style: TextStyle(color: Colors.teal),),
-                                              ],
-                                            )
-                                          ],
+                    return InkWell(
+                      onTap: (){
+                        Get.to(() => DetailPage(book: book), transition: Transition.leftToRight);
+
+                      },
+                      child: Container(
+                        width: 360,
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Card(
+                                child: Container(
+                                  height: 150,
+                                  width: 360,
+                                  child: Row(
+                                    children: [
+                                     SizedBox(
+                                       width: 140,
+                                     ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 5),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(book.title, style: TextStyle(fontWeight: FontWeight.bold),),
+                                              Text(book.detail, maxLines: 4,style: TextStyle(fontSize: 13,color: Colors.grey.shade700, fontWeight: FontWeight.w500),),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(book.rating),
+                                                  Text(book.genre, style: TextStyle(color: Colors.teal),),
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Positioned(
-                              left: 15,
-                              bottom: 10,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(book.imageUrl, height: 190, width: 125, fit: BoxFit.cover,))),
-                        ],
+                            Positioned(
+                                left: 15,
+                                bottom: 10,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(book.imageUrl, height: 190, width: 125, fit: BoxFit.cover,))),
+                          ],
+                        ),
                       ),
                     );
                   }
               )
             ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('You may also like', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),)),
+            ),
+
+            BookWidget(),
+
+
 
           ],
         )
